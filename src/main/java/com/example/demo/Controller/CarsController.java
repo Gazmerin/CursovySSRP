@@ -5,6 +5,8 @@ import com.example.demo.Repo.CarsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Models.Dostup;
+
 import java.util.List;
 
 @RestController
@@ -16,8 +18,9 @@ public class CarsController {
     @PostMapping(value = "/cars/create")
     public Cars createCars(@RequestBody Cars cars) { return carsRepo.save(cars); }
     @PutMapping(value = "/cars/save/{id}")
-    public String updateCars(@PathVariable long id, @RequestBody Cars cars)
+    public String updateCars(@PathVariable long id, @RequestBody Cars cars, @RequestBody Dostup dostup)
     {
+        if(getEditDostup() != 2) return "Доступ запрещён";
         Cars updateCar = carsRepo.findById(id).get();
         updateCar.setModel(cars.getModel());
         updateCar.setName(cars.getName());
