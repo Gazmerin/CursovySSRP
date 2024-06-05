@@ -5,6 +5,7 @@ import com.example.demo.Repo.RouteRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Models.Dostup;
 import java.util.List;
 
 @RestController
@@ -16,8 +17,9 @@ public class RouteController {
     @PostMapping(value = "/route/create")
     public Route getRouteCreate(@RequestBody Route route) { return routeRepo.save(route); }
     @PutMapping(value = "/route/save/{id}")
-    public String updateRoute(@PathVariable long id, @RequestBody Route route)
+    public String updateRoute(@PathVariable long id, @RequestBody Route route, @RequestBody Dostup dostup)
     {
+        if(getEditDostup() != 2) return "Доступ запрещён";
         Route updateRoute = routeRepo.findById(id).get();
         updateRoute.setStatus(route.getStatus());
         updateRoute.setKuda(route.getKuda());
