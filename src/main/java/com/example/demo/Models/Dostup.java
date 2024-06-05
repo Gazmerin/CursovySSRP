@@ -6,4 +6,7 @@ public class Dostup {
     public int getEditDostup(){
       return EditDostup;
     }
+    public setEditDostup(int dostup) {
+        this.EditDostup = dostup;
+    }
 }
