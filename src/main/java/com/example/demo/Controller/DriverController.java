@@ -5,6 +5,7 @@ import com.example.demo.Models.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Models.Dostup;
 import java.util.List;
 
 @RestController
@@ -16,8 +17,9 @@ public class DriverController {
     @PostMapping(value = "/driver/create")
     public Driver getDriverCreate(@RequestBody Driver driver) { return driverRepo.save(driver); }
     @PutMapping(value = "driver/save/{id}")
-    public String getDriverSave(@PathVariable long id, @RequestBody Driver driver)
+    public String getDriverSave(@PathVariable long id, @RequestBody Driver driver, @RequestBody Dostup dostup)
     {
+        if(getEditDostup() != 2) return "Доступ запрещён";
         Driver saveDriver = driverRepo.findById(id).get();
         saveDriver.setAge(driver.getAge());
         saveDriver.setFirstname(driver.getFirstname());
